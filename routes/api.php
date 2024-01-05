@@ -32,6 +32,10 @@ Route::group ([
     'middleware' => 'api',
     'prefix' => 'auth'
 ], function ($router) {
+    Route::get('dokter/getAll', [App\Http\Controllers\DokterController::class, 'index']);
+    Route::get('dokter/get/{id}', [App\Http\Controllers\DokterController::class, 'show']);
+    Route::put('dokter/update/{id}', [App\Http\Controllers\DokterController::class, 'update']);
+    Route::delete('dokter/delete/{id}', [App\Http\Controllers\DokterController::class, 'destroy']);
     Route::post('dokter/', [App\Http\Controllers\DokterController::class, 'store']);
     Route::post('dokter/login', [App\Http\Controllers\DokterController::class, 'login'])->name('login');
     Route::post('dokter/logout', [App\Http\Controllers\DokterController::class, 'logout']);
@@ -57,6 +61,10 @@ Route::group([
     Route::post('pasien/', [App\Http\Controllers\PasienController::class, 'register']);
     Route::post('pasien/logout', [App\Http\Controllers\PasienController::class, 'logout']);
     Route::post('pasien/me', [App\Http\Controllers\PasienController::class, 'me']);
+    Route::get('pasien/getAll', [App\Http\Controllers\PasienController::class, 'index']);
+    Route::get('pasien/get/{id}', [App\Http\Controllers\PasienController::class, 'show']);
+    Route::put('pasien/update/{id}', [App\Http\Controllers\PasienController::class, 'update']);
+    Route::delete('pasien/delete/{id}', [App\Http\Controllers\PasienController::class, 'destroy']);
 });
 
 Route::group([
@@ -90,6 +98,7 @@ Route::group([
     Route::post('/', [App\Http\Controllers\DaftarPoliController::class, 'store']);
     Route::put('/{id}', [App\Http\Controllers\DaftarPoliController::class, 'update']);
     Route::delete('/{id}', [App\Http\Controllers\DaftarPoliController::class, 'destroy']);
+    Route::get('/pasien/{id}', [App\Http\Controllers\DaftarPoliController::class, 'showByPasienId']);
 });
 
 Route::group([

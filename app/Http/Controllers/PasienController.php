@@ -13,7 +13,7 @@ class PasienController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:pasien', ['except' => ['login', 'register']]);
+        $this->middleware('auth:pasien', ['except' => ['login', 'register', 'index', 'show', 'update', 'destroy']]);
     }
 
     public function Register(Request $request)
@@ -96,4 +96,88 @@ class PasienController extends Controller
             'expires_in' => Auth::factory()->getTTL() * 60
         ]);
     } 
+
+    public function index()
+    {
+        $pasien = Pasien::orderBy('created_at', 'ASC')->get();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Berhasil menampilkan data pasien.',
+            'data' => $pasien
+        ]);
+    }
+
+    public function show($id)
+    {
+        $pasien = Pasien::find($id);
+
+        if (!$pasien) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data pasien dengan id ' . $id . ' tidak ditemukan'
+            ], 400);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Berhasil menampilkan data pasien dengan id ' . $id,
+            'data' => $pasien
+        ], 200);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $pasien = Pasien::find($id);
+
+        if (!$pasien) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data pasien dengan id ' . $id . ' tidak ditemukan'
+            ], 400);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'nama'      => 'required',
+            'username'  => 'required|unique:pasien,username,' . $id, // Perhatikan penambahan 'unique:pasien,username,' . $id
+            'alamat'    => 'required',
+            'no_hp'     => 'required',
+            'no_ktp'    => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        $pasien->update($request->all());
+
+        if ($pasien) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Data pasien dengan id ' . $id . ' berhasil diupdate',
+                'data' => $pasien
+            ], 200);
+        }
+    }
+
+    public function destroy($id)
+    {
+        $pasien = Pasien::find($id);
+
+        if (!$pasien) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data pasien dengan id ' . $id . ' tidak ditemukan'
+            ], 400);
+        }
+
+        if ($pasien->delete()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Data pasien dengan id ' . $id . ' berhasil dihapus',
+            ], 200);
+        }
+    }
+
+
 }

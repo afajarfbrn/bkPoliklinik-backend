@@ -121,5 +121,16 @@ class DaftarPoliController extends Controller
         ], 200);
     }
 
+    public function showByPasienId($id)
+    {
+        $daftar_poli = DaftarPoli::with('pasien', 'jadwal_periksa')->where('id_pasien', $id)->get();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Detail data daftar poli',
+            'data' => $daftar_poli
+        ], 200);
+    }
+
 
 }

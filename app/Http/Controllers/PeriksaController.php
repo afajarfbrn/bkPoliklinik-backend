@@ -11,7 +11,7 @@ class PeriksaController extends Controller
 {
     public function index()
     {
-        $periksa = Periksa::with('daftar_poli', 'daftar_poli.pasien', 'daftar_poli.jadwal_periksa')->get();
+        $periksa = Periksa::with('daftar_poli', 'daftar_poli.pasien', 'daftar_poli.jadwal_periksa', 'daftar_poli.jadwal_periksa.dokter')->get();
 
         return response()->json([
             'success' => true,
