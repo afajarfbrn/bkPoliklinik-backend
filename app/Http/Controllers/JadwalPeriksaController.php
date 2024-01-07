@@ -40,6 +40,7 @@ class JadwalPeriksaController extends Controller
             'jam_mulai' => 'required|string',
             'jam_selesai' => 'required|string',
             'tanggal' => 'required|date',
+            'status' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -67,6 +68,7 @@ class JadwalPeriksaController extends Controller
             'jam_mulai' => 'required|string',
             'jam_selesai' => 'required|string',
             'tanggal' => 'required|date',
+            'status' => 'required'
         ]);
 
         if ($validator->fails()) {

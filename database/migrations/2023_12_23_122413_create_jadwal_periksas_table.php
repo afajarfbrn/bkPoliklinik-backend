@@ -15,6 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->uuid('id_dokter');
             $table->enum('hari', ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu']);
+            $table->string("status");
             $table->time('jam_mulai');
             $table->time('jam_selesai');
             $table->datetime('tanggal');

@@ -20,6 +20,7 @@ class JadwalPeriksa extends Model
         'id',
         'id_dokter',
         'hari',
+        'status',
         'jam_mulai',
         'jam_selesai',
         'tanggal',
